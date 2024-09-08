@@ -1,39 +1,75 @@
 
-# Real Estate Property Recommender System
+# Real Estate Property Recommendation and Price Prediction System
 
-## Project Overview
+## Project Description
+This project is a comprehensive solution for recommending real estate properties based on similarity metrics and predicting property prices. It leverages various techniques such as TF-IDF for textual analysis of top facilities, cosine similarity, and a combination of machine learning models for price prediction. The project uses AWS EC2 for deployment and Streamlit for real-time interaction.
 
-This project implements a real estate property recommendation engine designed to assist users in discovering the best-suited properties based on a variety of features. The system compares property details such as nearby locations, available facilities, and price ranges using advanced Natural Language Processing (NLP) and machine learning techniques. By utilizing **TF-IDF Vectorization** and **Cosine Similarity**, the system evaluates property similarity and ranks the recommendations accordingly. The application is deployed using **Streamlit** on **AWS EC2**, offering users real-time property suggestions.
+### Features:
+1. **Real-Time Property Recommendations**: Recommends similar properties based on property features and top facilities.
+2. **Price Prediction**: Predicts property prices based on multiple features including area, location advantages, and amenities using multiple machine learning algorithms.
+3. **Deployment**: Hosted on AWS EC2 with a real-time interface through Streamlit.
 
-## Key Features
-
-- **NLP-Based Feature Comparison**: Leverages **TF-IDF Vectorization** to convert textual property data (e.g., facilities, nearby locations) into vectors for similarity calculations.
-- **Cosine Similarity Calculation**: Provides personalized property recommendations by analyzing and ranking properties based on similarity scores.
-- **Comprehensive Price Parsing**: Extracts and processes complex property pricing data for various configurations (e.g., 2 BHK, 3 BHK), ensuring accurate recommendations based on price.
-- **Multi-Factor Recommendation**: Combines similarity across different features—facilities, locations, and price details—to deliver holistic property recommendations.
-- **Real-Time Recommendation Engine**: Deployed via **Streamlit** on **AWS EC2**, the system is accessible in real-time, offering users instant property recommendations.
+---
 
 ## Data Description
+The dataset includes 246 rows and 7 columns with information on properties from Gurgaon. Key columns are:
+- **PropertyName**: Name of the property.
+- **TopFacilities**: List of the facilities provided in each property.
+- **PriceDetails**: Price range and area information for different configurations (2 BHK, 3 BHK, etc.).
+- **LocationAdvantages**: Key locations near the property along with distances.
 
-The dataset includes the following columns:
+---
 
-- **Property Name**: The official name of the property.
-- **Nearby Locations**: A list of landmarks and important locations near the property, along with their respective distances.
-- **Price Details**: Information about the price ranges for different property configurations, such as 2 BHK, 3 BHK, etc.
-- **Top Facilities**: Details of the facilities offered by the property, including amenities like swimming pools, gyms, and security.
+## Preprocessing
+1. **Data Cleaning**: Handled missing values and irrelevant columns. Columns such as `TopFacilities` were converted from list-like strings to proper lists for further analysis.
+2. **Feature Engineering**: Extracted useful information such as building type, area, and price from the `PriceDetails` column and converted distances to meters in the `LocationAdvantages` column.
+3. **One-Hot Encoding**: Applied One-Hot Encoding on categorical features such as property type and top facilities.
+4. **Standardization**: Standardized all numerical features to ensure the data is on the same scale before training models.
 
-## How it Works
+---
 
-1. **Data Preprocessing**: The system cleans and processes property data by parsing text and transforming it into numerical vectors using **TF-IDF**. Facilities, location advantages, and price details are parsed and structured for analysis.
-2. **Cosine Similarity**: The system calculates the similarity between different properties based on multiple factors, including features, location distances, and pricing.
-3. **Property Recommendations**: The top five most similar properties are recommended based on their similarity scores, allowing users to easily discover properties that match their preferences.
-4. **Real-Time Deployment**: The recommendation engine is deployed using **Streamlit** and hosted on **AWS EC2** to provide real-time, dynamic recommendations.
+## Modeling and Price Prediction
+
+### 1. **TF-IDF Vectorization and Cosine Similarity for Recommendations**
+- **TF-IDF Vectorizer**: Used to transform the `TopFacilities` column into a TF-IDF matrix.
+- **Cosine Similarity**: Calculated similarity between different properties to recommend the top 5 most similar properties for any given property.
+
+### 2. **Machine Learning Models for Price Prediction**
+The following models were used for predicting property prices based on the engineered features:
+- **Linear Regression**: Baseline model to predict prices using engineered features such as `area`, `building type`, and `location advantages`.
+- **Ridge and Lasso Regression**: Regularized versions of linear regression to handle multicollinearity and improve prediction accuracy.
+- **Random Forest and Gradient Boosting**: Used for capturing non-linear relationships in the data, improving predictive performance.
+- **XGBoost**: Applied for further boosting accuracy, showing the best performance among ensemble methods.
+
+The models were evaluated using R-squared (R²) and Mean Absolute Error (MAE) metrics.
+
+### 3. **Dimensionality Reduction**
+- **PCA (Principal Component Analysis)**: Applied to reduce dimensionality and improve model efficiency without losing significant information. 95% of the variance was retained.
+
+### 4. **Cross-Validation**
+- Performed 10-fold cross-validation for all machine learning models to ensure robustness of the predictions.
+
+### Model Performance:
+- **XGBoost**: Achieved the highest accuracy with R² = 0.89 and MAE = 0.57.
+- **Random Forest**: Close second with R² = 0.88 and MAE = 0.58.
+
+---
 
 ## Deployment
+The project was deployed via **Streamlit** on an **AWS EC2** instance, providing real-time property recommendations and price predictions to the user through an interactive web interface.
 
-The system has been deployed via **Streamlit** on **AWS EC2**, allowing users to interact with the recommendation engine in real-time. By leveraging the cloud-based infrastructure of AWS, the system is capable of scaling efficiently and handling multiple user requests simultaneously.
+---
 
-## Conclusion
+## Installation Instructions
+To run the project locally, follow these steps:
+1. Clone the repository.
+2. Install the required libraries using `pip install -r requirements.txt`.
+3. Run the Streamlit app with `streamlit run app.py`.
+4. Access the app at `http://localhost:8501` in your browser.
 
-This project offers a powerful and efficient real estate property recommendation system that combines advanced NLP techniques with machine learning algorithms. The system delivers personalized property recommendations based on user preferences, all accessible in real-time through a simple and intuitive web interface.
+---
 
+## Future Improvements
+- Include a more comprehensive dataset covering a wider range of cities.
+- Improve the recommendation system by integrating more advanced NLP techniques.
+- Experiment with more advanced deep learning models for price prediction.
