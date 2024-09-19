@@ -1,6 +1,5 @@
-
 # Real Estate Property Recommendation and Price Prediction System
-![GIF Preview](https://github.com/your-username/your-repo-name/blob/main/path-to-file/Thursday_September19_2024at3_20_37PM_default_da42f633-ezgif.com-optimize.gif)
+![GIF Preview](https://github.com/venkateshneu/Recommender-System-Housing-DATA/blob/main/Thursday_September19_2024at3_20_37PM_default_da42f633-ezgif.com-optimize.gif)
 
 ## Project Description
 This project is a comprehensive solution for recommending real estate properties based on similarity metrics and predicting property prices. It leverages various techniques such as TF-IDF for textual analysis of top facilities, cosine similarity, and a combination of machine learning models for price prediction. The project uses AWS EC2 for deployment and Streamlit for real-time interaction.
